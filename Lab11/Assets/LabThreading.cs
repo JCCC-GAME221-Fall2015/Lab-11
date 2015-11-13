@@ -26,11 +26,6 @@ public class LabThreading : MonoBehaviour
 
         Invoke("StopThreads", 10);
 	}
-	
-	void Update () 
-    {
-	
-	}
 
     /// <summary>
     /// Loop Thread1 continuously
@@ -40,10 +35,13 @@ public class LabThreading : MonoBehaviour
     {
         while(_stopThreads == false)
         {
-            Debug.Log("Display Thread 1");
-            _threadOutput = "Hello Thread1";
-            Thread.Sleep(1000); //Stop processing for 1000ms
-            Debug.Log("Thread 1 Output -->" + _threadOutput);
+            lock(this)
+            {
+                Debug.Log("Display Thread 1");
+                _threadOutput = "Hello Thread1";
+                Thread.Sleep(1000); //Stop processing for 1000ms
+                Debug.Log("Thread 1 Output -->" + _threadOutput);
+            }
         }
     }
 
@@ -55,10 +53,13 @@ public class LabThreading : MonoBehaviour
     {
         while (_stopThreads == false)
         {
-            Debug.Log("Display Thread 2");
-            _threadOutput = "Hello Thread2";
-            Thread.Sleep(1000); //Stop processing for 1000ms
-            Debug.Log("Thread 2 Output -->" + _threadOutput);
+            lock (this)
+            {
+                Debug.Log("Display Thread 2");
+                _threadOutput = "Hello Thread2";
+                Thread.Sleep(1000); //Stop processing for 1000ms
+                Debug.Log("Thread 2 Output -->" + _threadOutput);
+            }
         }
     }
 

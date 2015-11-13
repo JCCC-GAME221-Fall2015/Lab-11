@@ -49,7 +49,7 @@
 				output.posWorld = mul(_Object2World, input.vertex);
 				output.normalDir = normalize(float3(mul(float4(input.normal, 0.0), _World2Object).xyz));
 				output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
-				output.viewDirection = normalize( _WorldSpaceCameraPos.xyz - float3(input.posWorld.xyz));
+				output.viewDirection = normalize( _WorldSpaceCameraPos.xyz - float3(output.posWorld.xyz));
 
 				return output;
 			}
@@ -58,6 +58,7 @@
 			{
 				float3 normalDirection = normalize(input.normalDir);
 				//float3 viewDirection = normalize( _WorldSpaceCameraPos.xyz – float3(input.posWorld.xyz));
+				float3 viewDirection = normalize( _WorldSpaceCameraPos.xyz - float3(input.posWorld.xyz));
 
 				float3 lightDirection;
 				float attenuation = 1.0;
@@ -92,7 +93,7 @@
 
 				//~~~~~~~~~~~~~~~ MULTIPLE LINES 
 				float3 specularLighting = reflect(-lightDirection, normalDirection);
-				specularLighting = dot(specularLighting, input.viewDirection);
+				specularLighting = dot(specularLighting, viewDirection);
 				specularLighting = max(0.0, specularLighting);
 				specularLighting = pow(specularLighting, _Shininess);
 
@@ -107,12 +108,14 @@
 				specularLighting = specularColouring * specularLighting;
 				
 				//Rim Lighting
-				half rim = 1 - saturate(dot(normalize(input.viewDirection), normalDirection));
-				float4 rimLighting = attenuation * _LightColor0.rgb * _RimColor * 
-									 saturate(dot(normalDirection, lightDirection)) * pow(rim, _RimPower));
+				half rim = 1 - saturate(dot(normalize(viewDirection), normalDirection));
+				float3 rimLighting = attenuation * _LightColor0.rgb * _RimColor * 
+									 saturate(dot(normalDirection, lightDirection)) * pow(rim, _RimPower);
 				
 				//Final Lighting
-				float3 finalLight = rimLighting;
+				//Bring all lighting together and hace color effect it
+				float3 finalLight = (diffuseLighting + specularLighting + rimLighting + ambientLight) * _Color;
+				//finalLight = finalLight * diffuseLighting * specularLighting * _Color;
 				//float3 finalLight = (ambientLight + diffuseLighting + specularLighting) * float3(_Color.rgb);
 
 				//Test Lighting
