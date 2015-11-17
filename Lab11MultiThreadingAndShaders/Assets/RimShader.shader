@@ -81,12 +81,14 @@
 				
 				//Rim Lighting
 				float actualRim = 1 - saturate(dot(normalize(viewDirection), normalDirection));
-				float4 rimLighting = attenuation * _LightColor0.rgb * _RimColor * 
+				float4 rimLighting = attenuation * float4(_LightColor0.rgb, 1.0) * _RimColor * 
 					saturate(dot(normalDirection, lightDirection)) * pow(actualRim, _RimPower);
 				
 				//Final Lighting
-				//float3 finalLight = (ambientLight + diffuseLighting + specularLighting) * float3(_Color.rgb);
-				float3 finalLight = rimLighting;
+				float3 finalLight = 
+					(ambientLight + diffuseLighting + specularLighting + rimLighting) * 
+					float3(_Color.rgb);
+				//float3 finalLight = rimLighting;
 				
 				//Test Lighting
 				
