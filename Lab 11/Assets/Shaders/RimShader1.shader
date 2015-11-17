@@ -1,4 +1,4 @@
-﻿Shader "Custom/RimShader"
+﻿Shader "Custom/RimShader1"
 {
 	Properties //Properties block that the user can adjust
 	{		   //Interfaces with Unity Inspector
@@ -105,7 +105,7 @@
 				    saturate(dot(normalDirection, lightDirection)) * pow(actualRim, _RimPower);
 
 				//Final Lighting
-				float3 finalLight = rimLighting;
+				float3 finalLight = (rimLighting + ambientLight + diffuseLighting + specularLighting) * float3(_Color.rgb);
 
 				//Test Lighting
 
