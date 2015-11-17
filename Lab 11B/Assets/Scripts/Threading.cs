@@ -18,14 +18,17 @@ public class Threading : MonoBehaviour {
 	{
 		while(_stopThreads == false)
 		{
-			Debug.Log ("Display Thread 1");
-			_threadOutput = "Hello Thread1";
-			
-			//Put the thread to sleep (stop processing) for 1000 ms
-			//This is to simulate a lot of processing and calculations that
-			//would normally occur in a thread
-			Thread.Sleep(1000);
-			Debug.Log ("Thread 1 Output --> " + _threadOutput);
+			lock(this) //Lock on the CURRENT instance of the CLASS for thread#1
+			{
+				Debug.Log ("Display Thread 1");
+				_threadOutput = "Hello Thread1";
+				
+				//Put the thread to sleep (stop processing) for 1000 ms
+				//This is to simulate a lot of processing and calculations that
+				//would normally occur in a thread
+				Thread.Sleep(1000);
+				Debug.Log ("Thread 1 Output --> " + _threadOutput);
+			}//Release the lock for thread 1 here
 		}
 	}
 
@@ -37,14 +40,17 @@ public class Threading : MonoBehaviour {
 	{
 		while(_stopThreads == false)
 		{
-			Debug.Log ("Display Thread 2");
-			_threadOutput = "Hello Thread2";
-			
-			//Put the thread to sleep (stop processing) for 1000 ms
-			//This is to simulate a lot of processing and calculations that
-			//would normally occur in a thread
-			Thread.Sleep(1000);
-			Debug.Log ("Thread 2 Output --> " + _threadOutput);
+			lock(this)//Lock on the CURRENT instance of the CLASS for thread#2
+			{
+				Debug.Log ("Display Thread 2");
+				_threadOutput = "Hello Thread2";
+				
+				//Put the thread to sleep (stop processing) for 1000 ms
+				//This is to simulate a lot of processing and calculations that
+				//would normally occur in a thread
+				Thread.Sleep(1000);
+				Debug.Log ("Thread 2 Output --> " + _threadOutput);
+			}//Release the lock for thread 2 here
 		}
 	}
 
