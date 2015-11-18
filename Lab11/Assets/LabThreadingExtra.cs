@@ -15,19 +15,21 @@ public class LabThreadingExtra : MonoBehaviour
 
 	void Start () 
     {
+        // Declare Start functions for each thread
         ThreadStart firstThread = new ThreadStart(Function1);
         ThreadStart secondThread = new ThreadStart(Function2);
         ThreadStart thirdThread = new ThreadStart(Function3);
-        //ThreadStart fourthThread = new ThreadStart(Function4);
-
+        ThreadStart fourthThread = new ThreadStart(Function3);
+        // Declare threads
         Thread thread1 = new Thread(firstThread);
         Thread thread2 = new Thread(secondThread);
         Thread thread3 = new Thread(thirdThread);
-        //Thread thread4 = new Thread(fourthThread);
-
+        Thread thread4 = new Thread(fourthThread);
+        // Start threads
         thread1.Start();
         thread2.Start();
         thread3.Start();
+        thread4.Start();
 	}
 
     /// <summary>
