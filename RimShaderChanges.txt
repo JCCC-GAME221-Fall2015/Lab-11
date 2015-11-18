@@ -1,0 +1,5 @@
+Code added to Rim Shader:
+
+(line 117) float3 finalLight = (diffuseLighting + specularLighting + 
+								rimLighting + ambientLight) * 
+								_Color;
