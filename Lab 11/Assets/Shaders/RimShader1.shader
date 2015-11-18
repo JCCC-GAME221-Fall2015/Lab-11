@@ -1,4 +1,5 @@
-﻿Shader "Custom/RimShader1"
+﻿// RimShader1.shader
+Shader "Custom/RimShader1"
 {
 	Properties //Properties block that the user can adjust
 	{		   //Interfaces with Unity Inspector

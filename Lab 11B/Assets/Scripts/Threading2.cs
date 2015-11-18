@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// Threading2.cs
+using UnityEngine;
 using System.Collections;
 using System.Threading;
 
